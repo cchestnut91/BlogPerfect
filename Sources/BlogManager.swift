@@ -292,7 +292,7 @@ extension BlogManager {
     public func generateJsonFeed(_ jsonFeedPath: String!) throws {
         
         // Generate the file URL from the given saveLocation
-        if let url = URL(string: jsonFeedPath) {
+        if let url = URL(string: "file://"+jsonFeedPath.replacingOccurrences(of: " ", with: "%20")) {
             
             /// Create the JSONFeed dictionary and set values from the configuration
             var jsonFeed = [String:Any]()
