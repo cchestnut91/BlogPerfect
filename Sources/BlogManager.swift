@@ -62,7 +62,7 @@ extension BlogManager {
             }
             
             // Construct the URL to be used to save the serialized post
-            if let urlString = "\(fileUrlScheme)\(postDirectory)\(fileName)".addingPercentEncoding(withAllowedCharacters: []), let url = URL(string: urlString) {
+            if let urlString = "\(fileUrlScheme)\(fileName)".addingPercentEncoding(withAllowedCharacters: []), let url = URL(string: urlString) {
                 do {
                     
                     // Attempt to write the Post JSON to the file url

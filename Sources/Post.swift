@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// JSONFeed Keys
 let idKey = "id", urlKey = "url", titleKey = "title", authorKey = "author", publishedKey = "date_published", modifiedKey = "date_modified", htmlBodyKey = "content_html", textBodyKey = "content_text", externalUrlKey = "external_url", externalUrlTextKey = "_external_url_text", summaryKey = "summary", tagsKey = "tags", imageKey = "image", bannerImageKey = "banner_image"
 
@@ -169,7 +168,7 @@ extension Post {
             json[titleKey] = title
         }
         if author != nil {
-            json[authorKey] = author
+            json[authorKey] = author?.toJson()
         }
         json[publishedKey] = DateFormatter.rfc3339Formatter().string(from: published)
         if modified != nil {
@@ -207,28 +206,4 @@ extension Post {
         
         return json
     }
-}
-
-// MARK: - HTML
-extension Post {
-
-    /// Inserts the post into HTML content given a template HTML string
-    ///
-    /// - Parameter templateString: The Template HTML string
-    /// - Returns: The updated HTML string with the post content
-    public func HTMLString(from templateString: String?) -> String {
-        var html = templateString ?? ""
-        
-        html = html.replacingOccurrences(of: "{POST_TITLE}", with: displayTitle())
-        html = html.replacingOccurrences(of: "{POST_PUBLISHED}", with: DateFormatter.titleFormatter().string(from: published))
-        html = html.replacingOccurrences(of: "{POST_SUMMARY}", with: summary ?? "")
-        html = html.replacingOccurrences(of: "{POST_AUTHOR}", with: author?.name ?? "")
-        html = html.replacingOccurrences(of: "{POST_URL}", with: url?.absoluteString ?? "")
-        html = html.replacingOccurrences(of: "{POST_MODIFIED}", with: modified != nil ? DateFormatter.standardFormatter().string(from: modified!) : "")
-        html = html.replacingOccurrences(of: "{POST_EXTERNAL_URL}", with: externalUrl?.absoluteString ?? "")
-        html = html.replacingOccurrences(of: "{POST_EXTERNAL_URL_TEXT}", with: externalUrlText ?? "")
-        html = html.replacingOccurrences(of: "{POST_CONTENT}", with: body?.markdownToHTML ?? "")
-        return html
-    }
-    
 }
