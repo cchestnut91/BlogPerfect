@@ -64,10 +64,12 @@ extension BlogManager {
             // Construct the URL to be used to save the serialized post
             if let urlString = "\(fileUrlScheme)\(fileName)".addingPercentEncoding(withAllowedCharacters: []), let url = URL(string: urlString) {
                 do {
-                    
+                    print(urlString)
                     // Attempt to write the Post JSON to the file url
                     let data = try JSONSerialization.data(withJSONObject: post.toJson(), options: .prettyPrinted)
+                    print("attempting write")
                     try data.write(to: url)
+                    print("Write succeeded")
                 } catch {
                     throw error
                 }
