@@ -214,7 +214,7 @@ extension Post {
     /// Inserts the post into HTML content given a template HTML string
     ///
     /// - Parameter templateString: The Template HTML string
-    /// - Returns: The updated HTML string with the post content
+    /// - Returns: The updated HTML string with the post content 
     public func HTMLString(from templateString: String?) -> String {
         var html = templateString ?? ""
         
