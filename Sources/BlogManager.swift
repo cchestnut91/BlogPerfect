@@ -89,7 +89,7 @@ extension BlogManager {
     public func writeHTML(_ post: Post) throws {
         
         // If we don't have a directory to store posts in then we can't read them, and we do nothing here
-        if let _ = configuration.serializedPostStorageDirectory(), var generatedPostFile = configuration.publishedPostStorageDirectory(), let postPath = publishedLink(to: post) {
+        if let _ = configuration.serializedPostStorageDirectory(), var generatedPostFile = configuration.publishedPostStorageDirectory(), let _ = publishedLink(to: post) {
             let fileManager = FileManager.default
             
             /// Retrieve the year, month and day of the post publish date to create subdirectories
@@ -317,7 +317,13 @@ extension BlogManager {
                 
                 // Map each to a JSON value and set the resulting array to the JSONFeed dictionary
                 jsonFeed[blogItemsKey] = posts.map { (post) -> [String:Any] in
-                    return post.toJson()
+                    var postJSON = post.toJson()
+                    if post.title != nil {
+                        if let postLink = publishedUrl(to: post) {
+                            postJSON["url"] = postLink
+                        }
+                    }
+                    return postJSON
                 }
                 
                 // Serialize the JSON Object into Data
