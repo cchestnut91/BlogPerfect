@@ -110,8 +110,10 @@ extension BlogManager {
                 }
             }
             
+            let urlTitle = post.title ?? post.id
+            
             /// Construct the full file path
-            let filePath = generatedPostFile + post.displayTitle().replacingOccurrences(of: " ", with: "%20") + ".html"
+            let filePath = generatedPostFile + urlTitle.replacingOccurrences(of: " ", with: "%20") + ".html"
             
             // Generate the HTML string for the post page with the template from the configuration object
             let htmlString = post.HTMLString(from: configuration.blogPostTemplate)
