@@ -236,7 +236,7 @@ extension Post {
         html = html.replacingOccurrences(of: "{POST_MODIFIED}", with: modified != nil ? DateFormatter.standardFormatter().string(from: modified!) : "")
         html = html.replacingOccurrences(of: "{POST_EXTERNAL_URL}", with: externalUrl?.absoluteString ?? "")
         html = html.replacingOccurrences(of: "{POST_EXTERNAL_URL_TEXT}", with: externalUrlText ?? "")
-        html = html.replacingOccurrences(of: "{POST_CONTENT}", with: body?.markdownToHTML ?? "")
+        html = html.replacingOccurrences(of: "{POST_CONTENT}", with: bodyText)
         return html
     }
     
