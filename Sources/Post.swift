@@ -9,7 +9,7 @@
 import Foundation
 
 /// JSONFeed Keys
-let idKey = "id", urlKey = "url", titleKey = "title", authorKey = "author", publishedKey = "date_published", modifiedKey = "date_modified", htmlBodyKey = "content_html", textBodyKey = "content_text", externalUrlKey = "external_url", externalUrlTextKey = "_external_url_text", summaryKey = "summary", tagsKey = "tags", imageKey = "image", bannerImageKey = "banner_image"
+let idKey = "id", urlKey = "url", titleKey = "title", authorKey = "author", publishedKey = "date_published", modifiedKey = "date_modified", htmlBodyKey = "content_html", textBodyKey = "content_text", externalUrlKey = "external_url", externalUrlTextKey = "external_url_text", summaryKey = "summary", tagsKey = "tags", imageKey = "image", bannerImageKey = "banner_image"
 
 /// Class represents a post to a blog
 public class Post: NSObject {
