@@ -222,6 +222,9 @@ extension Post {
         
         if let imageUrlString = image?.absoluteString {
             bodyText = postImageTag.replacingOccurrences(of: imageURLMarker, with: imageUrlString)
+            print(bodyText)
+        } else {
+            print("no image")
         }
         
         if let bodyContent = body?.markdownToHTML {
