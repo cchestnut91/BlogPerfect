@@ -350,6 +350,8 @@ let archiveListItemContentMarker = "{ARCHIVE_ITEM}"
 let archiveListItemLinkMarker = "{ARCHIVE_ITEM_LINK}"
 let archiveListItemTextMarker = "{ARCHIVE_ITEM_TEXT}"
 let imageURLMarker = "{POST_IMAGE_URL}"
+let externalURLMarker = "{EXTERNAL_URL}"
+let externalURLTextMarker = "{EXTERNAL_URL_TEXT}"
 
 // Classes for HTML content, use these for CSS styling
 let recentPostsClass = "recentPostsContainer"
@@ -359,6 +361,7 @@ let archiveListClass = "blogPostArchive"
 let archiveListItemClass = "blogPostArchiveItem"
 let archiveListItemLinkClass = "blogPostArchiveItemLink"
 let postImageClass = "postImage"
+let postExternalUrlLinkClass = "postExternalUrl"
 
 // HTML tags for various content
 let recentPostsTag =  "<div class='\(recentPostsClass)'>\(recentPostsMarker)</div>"
@@ -368,6 +371,7 @@ let archiveListTag = "<ul class='\(archiveListClass)'>\n\(archiveListContentMark
 let archiveListItemTag = "<li class='\(archiveListItemClass)'>\(archiveListItemContentMarker)</li>\n"
 let archiveListItemLinkTag = "<a class='\(archiveListItemLinkClass)' href='\(archiveListItemLinkMarker)'>\(archiveListItemTextMarker)</a>"
 let postImageTag = "<img class='\(postImageClass)' src='\(imageURLMarker)' />"
+let postExternalUrlTag = "<a class'\(postExternalUrlLinkClass)' href='\(externalURLMarker)'>\(externalURLTextMarker)</a>"
 
 // MARK: - HTML
 extension BlogManager {
@@ -464,6 +468,10 @@ extension BlogManager {
         
         if let imageUrl = post.image?.absoluteString {
             html += postImageTag.replacingOccurrences(of: imageURLMarker, with: imageUrl)
+        }
+        
+        if let externalUrlTextContent = post.externalUrl?.absoluteString {
+            html += postExternalUrlTag.replacingOccurrences(of: externalURLMarker, with: externalUrlTextContent).replacingOccurrences(of: externalURLTextMarker, with: post.externalUrlText ?? "Link")
         }
         
         // If we have a body convert from Markdown to HTML and append to the HTML String

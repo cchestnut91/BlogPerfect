@@ -227,6 +227,10 @@ extension Post {
             print("no image")
         }
         
+        if let externalUrlTextContent = externalUrl?.absoluteString {
+            html += postExternalUrlTag.replacingOccurrences(of: externalURLMarker, with: externalUrlTextContent).replacingOccurrences(of: externalURLTextMarker, with: externalUrlText ?? "Link")
+        }
+        
         if let bodyContent = body?.markdownToHTML {
             bodyText += bodyContent
         }
