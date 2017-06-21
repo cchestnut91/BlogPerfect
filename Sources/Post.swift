@@ -45,9 +45,9 @@ public class Post: NSObject {
     public var tags: [String]?
     
     /// The primary image of the post, if any
-    public var image: Data?
+    public var image: URL?
     /// A banner image of the post, if any
-    public var bannerImage: Data?
+    public var bannerImage: URL?
     
     /// Initializes a new Post instance with a few given properties
     ///
@@ -107,10 +107,10 @@ public class Post: NSObject {
         tags = json[tagsKey] as? [String]
         
         if let imageString = json[imageKey] as? String {
-            image = Data(base64Encoded: imageString)
+            image = URL(string: imageString)
         }
         if let bannerImageString = json[bannerImageKey] as? String {
-            bannerImage = Data(base64Encoded: bannerImageString)
+            bannerImage = URL(string: bannerImageString)
         }
         
         super.init()
@@ -198,10 +198,10 @@ extension Post {
         }
         
         if image != nil {
-            json[imageKey] = image?.base64EncodedString()
+            json[imageKey] = image?.absoluteString
         }
         if bannerImage != nil {
-            json[bannerImageKey] = bannerImage?.base64EncodedString()
+            json[bannerImageKey] = bannerImage?.absoluteString
         }
         
         return json
@@ -217,6 +217,16 @@ extension Post {
     /// - Returns: The updated HTML string with the post content 
     public func HTMLString(from templateString: String?) -> String {
         var html = templateString ?? ""
+        
+        var bodyText = ""
+        
+        if let imageUrlString = image?.absoluteString {
+            bodyText = postImageTag.replacingOccurrences(of: imageURLMarker, with: imageUrlString)
+        }
+        
+        if let bodyContent = body?.markdownToHTML {
+            bodyText += bodyContent
+        }
         
         html = html.replacingOccurrences(of: "{POST_TITLE}", with: displayTitle())
         html = html.replacingOccurrences(of: "{POST_PUBLISHED}", with: DateFormatter.titleFormatter().string(from: published))

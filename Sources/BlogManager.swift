@@ -349,6 +349,7 @@ let archiveListContentMarker = "{POSTS_ARCHIVE}"
 let archiveListItemContentMarker = "{ARCHIVE_ITEM}"
 let archiveListItemLinkMarker = "{ARCHIVE_ITEM_LINK}"
 let archiveListItemTextMarker = "{ARCHIVE_ITEM_TEXT}"
+let imageURLMarker = "{POST_IMAGE_URL}"
 
 // Classes for HTML content, use these for CSS styling
 let recentPostsClass = "recentPostsContainer"
@@ -357,6 +358,7 @@ let postLinkClass = "postLink"
 let archiveListClass = "blogPostArchive"
 let archiveListItemClass = "blogPostArchiveItem"
 let archiveListItemLinkClass = "blogPostArchiveItemLink"
+let postImageClass = "postImage"
 
 // HTML tags for various content
 let recentPostsTag =  "<div class='\(recentPostsClass)'>\(recentPostsMarker)</div>"
@@ -365,6 +367,7 @@ let postLinkTag = "<a class='\(postLinkClass)' href='\(linkUrlMarker)'>\(linkTex
 let archiveListTag = "<ul class='\(archiveListClass)'>\n\(archiveListContentMarker)\n</ul>"
 let archiveListItemTag = "<li class='\(archiveListItemClass)'>\(archiveListItemContentMarker)</li>\n"
 let archiveListItemLinkTag = "<a class='\(archiveListItemLinkClass)' href='\(archiveListItemLinkMarker)'>\(archiveListItemTextMarker)</a>"
+let postImageTag = "<img class='\(postImageClass)' src='\(imageURLMarker)' />"
 
 // MARK: - HTML
 extension BlogManager {
@@ -458,6 +461,10 @@ extension BlogManager {
         
         // Create an HTML String to return based on the header
         var html = header
+        
+        if let imageUrl = post.image?.absoluteString {
+            html += postImageTag.replacingOccurrences(of: imageURLMarker, with: imageUrl)
+        }
         
         // If we have a body convert from Markdown to HTML and append to the HTML String
         if let body = post.body?.markdownToHTML {
